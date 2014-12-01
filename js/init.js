@@ -127,7 +127,7 @@
 				// Generic sections.
 					$('.main.style1')
 						.scrollwatch({
-							delay:		50,
+							delay:		0,
 							range:		0.5,
 							anchor:		'center',
 							on:			function(t) { t.removeClass('inactive'); },
@@ -136,7 +136,7 @@
 
 					$('.main.style2')
 						.scrollwatch({
-							delay:		50,
+							delay:		0,
 							range:		0.5,
 							anchor:		'center',
 							init:		function(t) { t.addClass('inactive'); },
@@ -145,10 +145,10 @@
 						});
 			
 				// Work.
-					$('#work')
+					$('#dates')
 						.scrollwatch({
-							delay:		25,
-							range:		0.6,
+							delay:		0,
+							range:		0.5,
 							anchor:		'center',
 							init:		function(t) { t.find('.row.images').addClass('inactive'); },
 							on:			function(t) {
@@ -178,15 +178,15 @@
 						});
 
 				// Contact.
-					$('#contact')
-						.scrollwatch({
-							delay:		25,
-							range:		0.5,
-							anchor:		'center',
-							init:		function(t) { t.addClass('inactive'); },
-							on:			function(t) { t.removeClass('inactive'); },
-							off:		function(t) { t.addClass('inactive'); }
-						});
+				$('#contact')
+					.scrollwatch({
+						delay:		0,
+						range:		1.0,
+						anchor:		'center',
+						init:		function(t) { t.addClass('inactive'); },
+						on:			function(t) { t.removeClass('inactive'); },
+						off:		function(t) { t.addClass('inactive'); }
+					});
 
 			}
 

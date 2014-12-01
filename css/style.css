@@ -278,6 +278,7 @@
 			}
 		
 			form input[type="text"],
+			form input[type="number"],
 			form input[type="email"],
 			form input[type="password"],
 			form select,
@@ -285,7 +286,7 @@
 				display: block;
 				width: 100%;
 				padding: 0.65em 0.75em;
-				background: none;
+				background: lightyellow;
 				border: solid 2px rgba(185,186,187,0.25);
 				color: inherit;
 				border-radius: 0.5em;
@@ -485,6 +486,7 @@
 		
 			.box.style2 {
 				padding: 3.5em 2.5em 3.5em 2.5em;
+				background-color: rgba(255,255,255,0.9);
 			}
 
 	/* Main */
@@ -667,9 +669,15 @@
 		padding-top: 3em;
 	}
 
+	#logo, #logo img {
+		height: 2.5em;
+		line-height: 2.5em;
+		margin: .1em;
+	}
+
 	#logo {
 		position: absolute;
-		left: 1em;
+		left: 0em;
 		top: 0;
 		height: 3em;
 		line-height: 3em;
@@ -678,6 +686,7 @@
 	
 		#logo a {
 			font-size: 1.25em;
+			margin: 5px;
 		}
 	
 	#nav {
@@ -708,11 +717,20 @@
 					outline: 0;
 				}
 
+	#notify-button, input.notify-button {
+		font-weight: bold;
+		background-color: rgba(81,150,165,0.8);
+	}
+
+	#notify-button:hover, input.notify-button:hover {
+		background-color: rgba(81,150,165,0.5);
+	}
+
 /*********************************************************************************/
-/* Intro                                                                         */
+/* Home                                                                          */
 /*********************************************************************************/
 
-	#intro {
+	#home {
 		background: url('images/overlay.png'), url('../images/intro.jpg');
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
@@ -724,7 +742,7 @@
 /* One                                                                           */
 /*********************************************************************************/
 
-	#one {
+	#concept {
 		background: url('images/overlay.png'), url('../images/one.jpg');
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
@@ -735,7 +753,7 @@
 /* Two                                                                           */
 /*********************************************************************************/
 
-	#two {
+	#team {
 		background: url('images/overlay.png'), url('../images/two.jpg');
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
@@ -746,13 +764,13 @@
 /* Work                                                                          */
 /*********************************************************************************/
 
-	#work {
+	#dates {
 	}
 	
-		#work .row.images {
+		#dates .row.images {
 		}
 	
-			#work .row.images .image {
+			#dates .row.images .image {
 				position: relative;
 				top: 0;
 				left: 0;
@@ -771,26 +789,26 @@
 				transform: translateZ(0);
 			}
 		
-			#work .row.images.inactive {
+			#dates .row.images.inactive {
 			}
 
-				#work .row.images.inactive .image {
+				#dates .row.images.inactive .image {
 					opacity: 0;
 				}
 			
-				#work .row.images.inactive .image.from-left {
+				#dates .row.images.inactive .image.from-left {
 					left: -14em;
 				}
 			
-				#work .row.images.inactive .image.from-right {
+				#dates .row.images.inactive .image.from-right {
 					left: 14em;
 				}
 			
-				#work .row.images.inactive .image.from-top {
+				#dates .row.images.inactive .image.from-top {
 					top: -7em;
 				}
 			
-				#work .row.images.inactive .image.from-bottom {
+				#dates .row.images.inactive .image.from-bottom {
 					top: 7em;
 				}
 			
@@ -806,6 +824,7 @@
 		#contact .box {
 			position: relative;
 			bottom: 0;
+			border-radius: 1em 1em 0em 0em;
 			
 			-moz-transition: all 1s ease;
 			-webkit-transition: all 1s ease;
@@ -863,6 +882,7 @@
 		
 			#footer .actions li {
 				font-size: 1.25em;
+				line-height: 2em;
 				margin: 0;
 			}
 			
@@ -1049,3 +1069,34 @@
 			body.touch .poptrox-popup .closer {
 				opacity: 1.0 !important;
 			}
+
+.embed-responsive-16by9 {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.embed-responsive-16by9 iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* ===========================
+--- Team
+============================ */
+.team {
+	text-align: center;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
