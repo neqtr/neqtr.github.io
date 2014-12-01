@@ -17,7 +17,7 @@ $(function() {
   $("form").validate();
   $('form').submit(function(event) {
     event.preventDefault();
-    if (this.valid()) {
+    if ($(this).valid()) {
       var LaunchSubscriber = Parse.Object.extend("LaunchSubscriber");
       var $form = {};
       $(this).serializeArray().map(function(x) {
