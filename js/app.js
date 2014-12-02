@@ -16,6 +16,10 @@ $(function() {
     'fVs9IbQfO5LZdKrSsmC4AcNtFVwQrh6M9FCuZZvi');
   $("form").validate();
   $(".content").fitVids();
+  $('#privacy').toggle();
+  $("#privacy-link").click(function() {
+    $('#privacy').slideToggle(1000);
+  });
   $('form').submit(function(event) {
     event.preventDefault();
     if ($(this).valid()) {

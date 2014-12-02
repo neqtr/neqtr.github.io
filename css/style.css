@@ -852,8 +852,10 @@
 	
 	#footer {
 		position: relative;
-		height: 5em;
-		line-height: 5em;
+		height: auto;
+		line-height: inherit;
+		text-align: center;
+		padding: 2em 1em 3em 1em;
 		margin: 0;
 		background: #39454b;
 		color: #999;
@@ -1103,4 +1105,60 @@ section, #footer, .box {
 
 #footer, .box {
 	box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+.legal {
+	text-align: left;
+	padding-top: 3em;
+}
+
+.legal ol {
+	list-style: decimal;
+}
+
+.legal ul {
+	list-style: disc;
+}
+
+.c0 {
+    font-weight: 700;
+}
+
+.c10 {
+    padding: 72pt 90pt;
+}
+
+.c2 {
+    padding-left: 0;
+    margin-left: 108pt
+}
+
+.c9 {
+    margin: 0;
+    padding: 0;
+}
+
+.c6 {
+    padding-left: 0;
+    margin-left: 72pt;
+}
+
+.c3 {
+    margin-left: 36pt
+}
+
+.c7 {
+    font-weight: 700;
+}
+
+.c12 {
+    margin-left: 144pt;
+}
+
+.c4 {
+    text-decoration: underline;
+}
+
+.c8 {
+    padding-left: 0;
 }
