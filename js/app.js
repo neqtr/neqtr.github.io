@@ -15,6 +15,7 @@ $(function() {
   Parse.initialize('6uFTppb9Gpf0tLl1UlqF8wu4BS3FxQCfNXcZbdMe',
     'fVs9IbQfO5LZdKrSsmC4AcNtFVwQrh6M9FCuZZvi');
   $("form").validate();
+  $(".content").fitVids();
   $('form').submit(function(event) {
     event.preventDefault();
     if ($(this).valid()) {
