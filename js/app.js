@@ -42,6 +42,26 @@ $(function() {
       });
     }
   });
+  $('#store').scrollwatch({
+    delay:    0,
+    range:    1.0,
+    anchor:   'center',
+    init:   function(t) {
+      $('form.buy-shirt').each(function(i) {
+        $(this).css({opacity: 0});
+      });
+    },
+    on:     function(t) {
+      $('form.buy-shirt').each(function(i) {
+        $(this).delay(i * 500).animate({opacity: 1}, 1000);
+      });
+    },
+    off:    function(t) {
+      $('form.buy-shirt').each(function(i) {
+        $(this).css({opacity: 0});
+      });
+    }
+  });
   $('select.productSize').selectOrDie({
     placeholderOption: true,
     onChange: function() {
