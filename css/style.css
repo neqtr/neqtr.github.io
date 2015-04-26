@@ -1142,7 +1142,12 @@
 }
 
 #store .buy-button {
-	bottom: 5em;
+	bottom: 7em;
+}
+
+form.sign-up label {
+	text-align: left;
+	font-weight: bold;
 }
 
 /* Shadows */
