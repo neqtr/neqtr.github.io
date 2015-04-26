@@ -1150,6 +1150,10 @@ form.sign-up label {
 	font-weight: bold;
 }
 
+label.error {
+	color: red;
+}
+
 /* Shadows */
 section, #footer, .box {
 	box-shadow: 0 0 50px rgba(0,0,0,0.5);
