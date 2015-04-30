@@ -23,16 +23,18 @@ $(function() {
     event.preventDefault();
     if ($(this).valid()) {
       var LaunchSubscriber = Parse.Object.extend("LaunchSubscriber");
-      var $form = {};
+      var $form = this;
+      var $formValues = {};
       $(this).serializeArray().map(function(x) {
-        $form[x.name] = x.value;
+        $formValues[x.name] = x.value;
       });
-      new LaunchSubscriber().save($form, {
+      new LaunchSubscriber().save($formValues, {
         success: function(object) {
           $.growl.notice({
             title: "Congrats!",
             message: 'See ya when the app launches!'
           });
+          $form.reset();
         },
         error: function(model, error) {
           $.growl.error({
