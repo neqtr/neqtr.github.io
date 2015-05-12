@@ -12,8 +12,6 @@ _gaq.push(['_trackPageview']);
 
 $(function() {
   $("body").track({ /* Optional Configuration */ });
-  Parse.initialize('6uFTppb9Gpf0tLl1UlqF8wu4BS3FxQCfNXcZbdMe',
-    'fVs9IbQfO5LZdKrSsmC4AcNtFVwQrh6M9FCuZZvi');
   $("form").validate();
   $('#privacy').toggle();
   $("#privacy-link").click(function() {
@@ -22,25 +20,22 @@ $(function() {
   $('form.sign-up').submit(function(event) {
     event.preventDefault();
     if ($(this).valid()) {
-      var LaunchSubscriber = Parse.Object.extend("LaunchSubscriber");
       var $form = this;
       var $formValues = {};
       $(this).serializeArray().map(function(x) {
         $formValues[x.name] = x.value;
       });
-      new LaunchSubscriber().save($formValues, {
-        success: function(object) {
-          $.growl.notice({
-            title: "Congrats!",
-            message: 'See ya when the app launches!'
-          });
-          $form.reset();
-        },
-        error: function(model, error) {
-          $.growl.error({
-            message: 'Unable to sign you up to get notified!'
-          });
-        }
+      $.post('http://neqtrtest.parseapp.com/join', $formValues)
+      .done(function(data) {
+        $.growl.notice({
+          title: "Congrats!",
+          message: data.result
+        });
+        //$form.reset();
+      }).fail(function(error) {
+        $.growl.error({
+          message: error.responseText
+        });
       });
     }
   });
