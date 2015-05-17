@@ -107,7 +107,9 @@
 				$(':last-child').addClass('last-child');
 
 		// Gallery.
-			$('.gallery').poptrox({
+		var galleryElements = $('.gallery');
+		if (galleryElements && galleryElements.length) {
+			galleryElements.poptrox({
 				baseZIndex: 10001,
 				useBodyOverflow: false,
 				usePopupEasyClose: false,
@@ -119,13 +121,16 @@
 				windowMargin: (skel.isActive('mobile') ? 5 : 50),
 				usePopupNav: true
 			});
+		}
 
 		// Section transitions.
 
 			if (settings.sectionTransitions) {
 
 				// Generic sections.
-					$('.main.style1')
+				var style1Elements = $('.main.style1');
+				if (style1Elements && style1Elements.length) {
+					style1Elements
 						.scrollwatch({
 							delay:		0,
 							range:		0.5,
@@ -133,8 +138,11 @@
 							on:			function(t) { t.removeClass('inactive'); },
 							off:		function(t) { t.addClass('inactive'); }
 						});
+				}
 
-					$('.main.style2')
+				var style2Elements = $('.main.style2');
+				if (style2Elements && style2Elements.length) {
+					style2Elements
 						.scrollwatch({
 							delay:		0,
 							range:		0.5,
@@ -143,9 +151,14 @@
 							on:			function(t) { t.removeClass('inactive'); },
 							off:		function(t) { t.addClass('inactive'); }
 						});
+				}
+
+					
 			
 				// Work.
-					$('#dates')
+				var datesElement = $('#dates');
+				if (datesElement && datesElement.length) {
+					datesElement
 						.scrollwatch({
 							delay:		0,
 							range:		0.5,
@@ -177,16 +190,21 @@
 										}
 						});
 
+				}
+
 				// Contact.
-				$('#contact')
-					.scrollwatch({
-						delay:		0,
-						range:		1.0,
-						anchor:		'center',
-						init:		function(t) { t.addClass('inactive'); },
-						on:			function(t) { t.removeClass('inactive'); },
-						off:		function(t) { t.addClass('inactive'); }
-					});
+				var contactElement = $('#contact');
+				if (contactElement && contactElement.length) {
+					contactElement
+						.scrollwatch({
+							delay:		0,
+							range:		1.0,
+							anchor:		'center',
+							init:		function(t) { t.addClass('inactive'); },
+							on:			function(t) { t.removeClass('inactive'); },
+							off:		function(t) { t.addClass('inactive'); }
+						});
+				}
 
 			}
 
