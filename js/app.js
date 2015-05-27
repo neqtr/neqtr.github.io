@@ -32,7 +32,7 @@ $(function() {
                   title: "Congrats!",
                   message: data.result
                 });
-                //$form.reset();
+                $form.reset();
               }).fail(function(error) {
                 $.growl.error({
                   message: error.responseText
