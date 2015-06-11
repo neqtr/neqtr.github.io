@@ -1,5 +1,5 @@
 <?php
 header('Status: 301 Moved Permanently');
-header('Location: https://okwolf.com/neqtr-test/join.html?'
+header('Location: https://neqtr.com/join.html?'
 	. $_SERVER['QUERY_STRING']);
 ?>

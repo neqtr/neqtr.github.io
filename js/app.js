@@ -26,7 +26,7 @@ $(function() {
               $(this).serializeArray().map(function(x) {
                 $formValues[x.name] = x.value;
               });
-              $.post('https://neqtrsandbox.parseapp.com/join', $formValues)
+              $.post('https://neqtr.parseapp.com/join', $formValues)
               .done(function(data) {
                 $.growl.notice({
                   title: "Congrats!",
