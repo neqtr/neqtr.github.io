@@ -807,12 +807,12 @@
 /* Contact                                                                       */
 /*********************************************************************************/
 
-	#contact {
+	#join {
 		padding-bottom: 0;
 		overflow: hidden;
 	}
 	
-		#contact .box {
+		#join .box {
 			position: relative;
 			bottom: 0;
 			border-radius: 1em 1em 0em 0em;
@@ -830,10 +830,10 @@
 			transform: translateZ(0);
 		}
 		
-		#contact.inactive {
+		#join.inactive {
 		}
 
-			#contact.inactive .box {
+			#join.inactive .box {
 				bottom: -30em;
 			}
 
@@ -1142,7 +1142,16 @@
 }
 
 #store .buy-button {
-	bottom: 5em;
+	bottom: 7em;
+}
+
+form.sign-up label {
+	text-align: left;
+	font-weight: bold;
+}
+
+label.error {
+	color: red;
 }
 
 /* Shadows */
