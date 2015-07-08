@@ -1074,6 +1074,10 @@
 	max-width: 33.3333333333%;
 }
 
+.team.row div {
+	height: 15em;
+}
+
 .img-responsive {
   display: block;
   max-width: 100%;
@@ -1143,6 +1147,10 @@
 
 #store .buy-button {
 	bottom: 7em;
+}
+
+#partners .row div {
+	height: 15em;
 }
 
 form.sign-up label {
