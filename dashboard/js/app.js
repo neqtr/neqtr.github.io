@@ -10,7 +10,8 @@ window.getAuthType = function() {
   return 'facebook';
 }
 
-Parse.initialize('QLpuWDRSTQQj6KcfrUOoYPUgEFpC057YlvTNb1Vf', 'UwUUDzfZ6k9hcHc3wBjiM2PUJuxmHPnomdB0FOvr');
+Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI',
+  'ZZUy30WPfWVii6L7RMOsD4hBxeD1dkwFT4VeYICF');
 window.fbAsyncInit = function() {
   Parse.FacebookUtils.init({ // this line replaces FB.init({
     appId      : '874529702559292', // Facebook App ID
@@ -22,8 +23,102 @@ window.fbAsyncInit = function() {
   // Run code after the Facebook SDK is loaded.
 };
 
+function addWeeklyTotal(weeklyTotal) {
+  var template = $('#weekly-total-template').clone();
+  template.removeAttr('id');
+  template.find('.panel-container').addClass('panel-' + weeklyTotal.type);
+  template.find('.icon').addClass('fa-' + weeklyTotal.icon);
+  template.find('.total').text(weeklyTotal.total);
+  template.find('.total-label').text(weeklyTotal.label);
+  template.hide().fadeIn();
+  template.appendTo('.row.weekly');
+}
+
+function updateWeeklyRange() {
+  var today = moment(),
+  weekAgo = moment().subtract({ days: 7 }),
+  displayToday = today.format('MMM Do'),
+  displayWeekAgo = weekAgo.format('MMM Do'),
+  displayRange = displayWeekAgo + ' - ' + displayToday;
+  $('.weekly-range').text(displayRange);
+}
+
 function updateWeeklyTotals() {
-  
+  Parse.Cloud.run('weeklyTotal', {
+    totalClass: 'ApplyingUser'
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'warning',
+      icon: 'users',
+      total: total,
+      label: 'Applications'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'ApplyingUser',
+      approved: true
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'success',
+      icon: 'check-circle',
+      total: total,
+      label: 'Approved'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: '_User'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'info',
+      icon: 'user',
+      total: total,
+      label: 'Profiles'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Match',
+      liked: true
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'danger',
+      icon: 'heart',
+      total: total,
+      label: 'Matches'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Message'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'info',
+      icon: 'comments',
+      total: total,
+      label: 'Chat Messages'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Invitation'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'warning',
+      icon: 'calendar',
+      total: total,
+      label: 'Date Invitations'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Invitation',
+      confirmed: true
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'success',
+      icon: 'calendar-check-o',
+      total: total,
+      label: 'Confirmed Dates'
+    });
+  }, function(error) {
+    console.error(error);
+  });
 }
 
 function updateCharts() {
@@ -82,7 +177,9 @@ function updateForLogin(user) {
   $('.logged-out-content').addClass('hidden');
   loggedInContent.load('html/widgets.part.html', function() {
     loggedInContent.removeClass('hidden');
+    loggedInContent.hide();
     loggedInContent.fadeIn();
+    updateWeeklyRange();
     updateWeeklyTotals();
     updateCharts();
   });
@@ -122,15 +219,15 @@ $(function() {
     updateForLogout();
   });
 
-  // var currentUser = Parse.User.current();
-  // if (currentUser && currentUser.get('email')) {
-  //   updateForLogin(currentUser);
-  // } else {
-  //   updateForLogout();
-  // }
-  updateForLogin({
-    get: function() {
-      return 'User';
-    }
-  });
+  var currentUser = Parse.User.current();
+  if (currentUser && currentUser.get('email')) {
+    updateForLogin(currentUser);
+  } else {
+    updateForLogout();
+  }
+  // updateForLogin({
+  //   get: function() {
+  //     return 'User';
+  //   }
+  // });
 });
