@@ -1,0 +1,39 @@
+body {
+    padding-top: 50px;
+}
+
+#page-wrapper {
+    min-height: 568px;
+}
+
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+    }
+}
+
+.navbar-text.logged-in-text {
+    margin-top: 10px;
+}    
+
+.jumbotron .container {
+    width: 100%;
+}
+
+.jumbotron .row {
+    padding-top: 20px;
+}
+
+.huge {
+    font-size: 40px;
+}
+
+.charts.row {
+    padding: 15px 15px 0px 15px;
+}
+
+@media(min-width:768px) {
+    .charts.row {
+        padding: 15px 30px 0px 30px;
+    }
+}
