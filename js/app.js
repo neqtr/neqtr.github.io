@@ -14,11 +14,10 @@ $(function() {
   var joinSection = $('#join');
   if (joinSection && joinSection.length) {
     joinSection.load('html/join.part.html', function() {
-      $("form").validate();
-
         var signupForm = $('form.sign-up');
         if (signupForm && signupForm.length) {
-          $('form.sign-up').submit(function(event) {
+          signupForm.validate();
+          signupForm.submit(function(event) {
             event.preventDefault();
             if ($(this).valid()) {
               var $form = this;
@@ -30,6 +29,50 @@ $(function() {
               .done(function(data) {
                 $.growl.notice({
                   title: "Congrats!",
+                  message: data.result
+                });
+                $form.reset();
+              }).fail(function(error) {
+                $.growl.error({
+                  message: error.responseText
+                });
+              });
+            }
+          });
+        }
+    });
+  }
+
+  var eventSection = $('#event');
+  if (eventSection && eventSection.length) {
+    eventSection.load('html/event.part.html', function() {
+      var eventForm = $('form.suggest-event');
+        if (eventForm && eventForm.length) {
+          eventForm.validate();
+
+          $('.date-time-picker').datetimepicker({
+            format: 'm/d/Y h:i A',
+            formatTime:'g:i A'
+          });
+
+          $(".date-time-picker[name='start']").blur(function() {
+            $(".date-time-picker[name='end']").filter(function() {
+              return !this.value;
+            }).val($(this).val());
+          });
+
+          eventForm.submit(function(event) {
+            event.preventDefault();
+            if ($(this).valid()) {
+              var $form = this;
+              var $formValues = {};
+              $(this).serializeArray().map(function(x) {
+                $formValues[x.name] = x.value;
+              });
+              $.post('https://neqtr.parseapp.com/suggestEvent', $formValues)
+              .done(function(data) {
+                $.growl.notice({
+                  title: "Thanks!",
                   message: data.result
                 });
                 $form.reset();

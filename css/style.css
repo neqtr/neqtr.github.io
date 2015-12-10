@@ -583,7 +583,7 @@
 		
 			.main.style3 {
 				text-align: center;
-				padding: 6em 0 6em 0;
+				padding: 2em 0 6em 0;
 			}
 
 				.main.style3 .content {
@@ -807,12 +807,12 @@
 /* Contact                                                                       */
 /*********************************************************************************/
 
-	#join {
-		padding-bottom: 0;
-		overflow: hidden;
+	.form-section {
+		padding-bottom: 0 !important;
+		overflow: hidden !important;
 	}
 	
-		#join .box {
+		.form-section .box {
 			position: relative;
 			bottom: 0;
 			border-radius: 1em 1em 0em 0em;
@@ -829,11 +829,16 @@
 			-ms-transform: translateZ(0);
 			transform: translateZ(0);
 		}
+
+		.form-section form label {
+			text-align: left;
+			font-weight: bold;
+		}
 		
-		#join.inactive {
+		.form-section.inactive {
 		}
 
-			#join.inactive .box {
+			.form-section.inactive .box {
 				bottom: -30em;
 			}
 
@@ -1151,11 +1156,6 @@
 
 #partners .row div {
 	height: 15em;
-}
-
-form.sign-up label {
-	text-align: left;
-	font-weight: bold;
 }
 
 label.error {
