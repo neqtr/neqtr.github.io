@@ -75,6 +75,16 @@ function updateWeeklyTotals() {
       label: 'Questions Answered'
     });
     return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Photo'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'info',
+      icon: 'photo',
+      total: total,
+      label: 'Photos'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
       totalClass: 'Match',
       liked: true
     });
