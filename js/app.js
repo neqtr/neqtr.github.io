@@ -14,18 +14,18 @@ $(function() {
   var joinSection = $('#join');
   if (joinSection && joinSection.length) {
     joinSection.load('html/join.part.html', function() {
-        var signupForm = $('form.sign-up');
-        if (signupForm && signupForm.length) {
-          signupForm.validate();
-          signupForm.submit(function(event) {
-            event.preventDefault();
-            if ($(this).valid()) {
-              var $form = this;
-              var $formValues = {};
-              $(this).serializeArray().map(function(x) {
-                $formValues[x.name] = x.value;
-              });
-              $.post('https://neqtr.parseapp.com/join', $formValues)
+      var signupForm = $('form.sign-up');
+      if (signupForm && signupForm.length) {
+        signupForm.validate();
+        signupForm.submit(function(event) {
+          event.preventDefault();
+          if ($(this).valid()) {
+            var $form = this;
+            var $formValues = {};
+            $(this).serializeArray().map(function(x) {
+              $formValues[x.name] = x.value;
+            });
+            $.post('https://neqtr.parseapp.com/join', $formValues)
               .done(function(data) {
                 $.growl.notice({
                   title: "Congrats!",
@@ -37,9 +37,9 @@ $(function() {
                   message: error.responseText
                 });
               });
-            }
-          });
-        }
+          }
+        });
+      }
     });
   }
 
@@ -47,43 +47,56 @@ $(function() {
   if (eventSection && eventSection.length) {
     eventSection.load('html/event.part.html', function() {
       var eventForm = $('form.suggest-event');
-        if (eventForm && eventForm.length) {
-          eventForm.validate();
+      if (eventForm && eventForm.length) {
+        eventForm.validate();
 
-          $('.date-time-picker').datetimepicker({
-            format: 'm/d/Y h:i A',
-            formatTime:'g:i A'
-          });
+        $('.date-time-picker').datetimepicker({
+          format: 'm/d/Y h:i A',
+          formatTime: 'g:i A'
+        });
 
-          $(".date-time-picker[name='start']").blur(function() {
-            $(".date-time-picker[name='end']").filter(function() {
-              return !this.value;
-            }).val($(this).val());
-          });
+        $(".date-time-picker[name='start']").blur(function() {
+          $(".date-time-picker[name='end']").filter(function() {
+            return !this.value;
+          }).val($(this).val());
+        });
 
-          eventForm.submit(function(event) {
-            event.preventDefault();
-            if ($(this).valid()) {
-              var $form = this;
-              var $formValues = {};
-              $(this).serializeArray().map(function(x) {
-                $formValues[x.name] = x.value;
-              });
-              $.post('https://neqtr.parseapp.com/suggestEvent', $formValues)
+        eventForm.submit(function(event) {
+          event.preventDefault();
+          var $form = this;
+
+          function postEventMessage(name, message) {
+            if (window.webkit && webkit.messageHandlers && webkit.messageHandlers[name]) {
+              webkit.messageHandlers[name].postMessage(message);
+            }
+          }
+          if (!$(this).valid()) {
+            postEventMessage('eventInvalid');
+          } else {
+            var $formValues = {};
+            $(this).serializeArray().map(function(x) {
+              $formValues[x.name] = x.value;
+            });
+            $formValues.userId = url('?userId');
+            $.post('https://neqtr.parseapp.com/suggestEvent', $formValues)
               .done(function(data) {
+                var successMessage = data.result;
                 $.growl.notice({
                   title: "Thanks!",
-                  message: data.result
+                  message: successMessage
                 });
                 $form.reset();
+                postEventMessage('eventSuccess', successMessage);
               }).fail(function(error) {
+                var errorMessage = error.responseText;
                 $.growl.error({
-                  message: error.responseText
+                  message: errorMessage
                 });
+                postEventMessage('eventFailure', errorMessage);
               });
-            }
-          });
-        }
+          }
+        });
+      }
     });
   }
 
@@ -98,31 +111,37 @@ $(function() {
   }
 
   $("body").track({ /* Optional Configuration */ });
-  
+
   var storeSection = $('#store');
   if (storeSection && storeSection.length) {
     storeSection.scrollwatch({
-      delay:    0,
-      range:    1.0,
-      anchor:   'center',
-      init:   function(t) {
+      delay: 0,
+      range: 1.0,
+      anchor: 'center',
+      init: function(t) {
         $('form.buy-shirt').each(function(i) {
-          $(this).css({opacity: 0});
+          $(this).css({
+            opacity: 0
+          });
         });
       },
-      on:     function(t) {
+      on: function(t) {
         $('form.buy-shirt').each(function(i) {
-          $(this).delay(i * 500).animate({opacity: 1}, 1000);
+          $(this).delay(i * 500).animate({
+            opacity: 1
+          }, 1000);
         });
       },
-      off:    function(t) {
+      off: function(t) {
         $('form.buy-shirt').each(function(i) {
-          $(this).css({opacity: 0});
+          $(this).css({
+            opacity: 0
+          });
         });
       }
     });
   }
-  
+
   var productSizeSelectors = $('select.productSize');
   if (productSizeSelectors && productSizeSelectors.length) {
     productSizeSelectors.selectOrDie({
@@ -132,7 +151,7 @@ $(function() {
       }
     });
   }
-  
+
   if (window.StripeCheckout) {
     var currentDescription = 'Unknown Item';
     var checkout = StripeCheckout.configure({
@@ -140,21 +159,21 @@ $(function() {
       image: 'https://www.neqtr.com/images/logo-padded.png',
       token: function(token) {
         $.post('https://neqtr-store.parseapp.com/orders', {
-          tokenId: token.id,
-          description: currentDescription,
-          email: token.email
-        }).done(function(data) {
-          console.log(data);
-          $.growl.notice({
-            title: data.result,
-            message: data.detail
-          });
-        })
-        .fail(function(data) {
-          $.growl.error({
-            message: data.responseText
-          });
-        })
+            tokenId: token.id,
+            description: currentDescription,
+            email: token.email
+          }).done(function(data) {
+            console.log(data);
+            $.growl.notice({
+              title: data.result,
+              message: data.detail
+            });
+          })
+          .fail(function(data) {
+            $.growl.error({
+              message: data.responseText
+            });
+          })
       }
     });
     var buyShirtForm = $('form.buy-shirt');
