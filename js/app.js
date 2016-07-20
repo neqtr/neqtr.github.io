@@ -69,6 +69,9 @@ $(function() {
             if (window.webkit && webkit.messageHandlers && webkit.messageHandlers[name]) {
               webkit.messageHandlers[name].postMessage(message);
             }
+            if (Android) {
+            	Android.showToast(name, message);
+            }
           }
           if (!$(this).valid()) {
             postEventMessage('eventInvalid');
