@@ -70,7 +70,7 @@ $(function() {
               webkit.messageHandlers[name].postMessage(message);
             }
             if (Android) {
-            	Android.showToast(name, message);
+            	Android.postMessage(name, message);
             }
           }
           if (!$(this).valid()) {
