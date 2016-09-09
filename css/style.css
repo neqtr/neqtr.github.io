@@ -672,7 +672,7 @@
 	#logo, #logo img {
 		height: 2.5em;
 		line-height: 2.5em;
-		margin: 0.1em 0.25em;
+		margin: .1em;
 	}
 
 	#logo {
