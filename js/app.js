@@ -10,6 +10,9 @@ _gaq.push(['_trackPageview']);
   s.parentNode.insertBefore(ga, s);
 })();
 
+Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI', 'ZZUy30WPfWVii6L7RMOsD4hBxeD1dkwFT4VeYICF');
+Parse.serverURL = 'https://api.neqtr.com/1'
+
 $(function() {
   var joinSection = $('#join');
   if (joinSection && joinSection.length) {
@@ -69,7 +72,7 @@ $(function() {
             if (window.webkit && webkit.messageHandlers && webkit.messageHandlers[name]) {
               webkit.messageHandlers[name].postMessage(message);
             }
-            if (Android) {
+            if (window.Android) {
             	Android.postMessage(name, message);
             }
           }
@@ -81,22 +84,21 @@ $(function() {
               $formValues[x.name] = x.value;
             });
             $formValues.userId = url('?userId');
-            $.post('https://neqtr.parseapp.com/suggestEvent', $formValues)
-              .done(function(data) {
-                var successMessage = data.result;
-                $.growl.notice({
-                  title: "Thanks!",
-                  message: successMessage
-                });
-                $form.reset();
-                postEventMessage('eventSuccess', successMessage);
-              }).fail(function(error) {
-                var errorMessage = error.responseText;
-                $.growl.error({
-                  message: errorMessage
-                });
-                postEventMessage('eventFailure', errorMessage);
+            Parse.Cloud.run('suggestEvent', $formValues)
+            .then(function(successMessage) {
+              $.growl.notice({
+                title: "Thanks!",
+                message: successMessage
               });
+              $form.reset();
+              postEventMessage('eventSuccess', successMessage);
+            }, function(error) {
+              var errorMessage = error.message || error;
+              $.growl.error({
+                message: errorMessage
+              });
+              postEventMessage('eventFailure', errorMessage)
+            });
           }
         });
       }
