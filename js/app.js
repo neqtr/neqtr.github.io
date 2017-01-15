@@ -45,7 +45,7 @@ $(function() {
 
   var eventSection = $('#event');
   if (eventSection && eventSection.length) {
-    eventSection.load('html/event.part.html', function() {
+    eventSection.load('/html/event.part.html', function() {
       var eventForm = $('form.suggest-event');
       if (eventForm && eventForm.length) {
         eventForm.validate();
@@ -105,7 +105,7 @@ $(function() {
 
   var privacyElement = $('#privacy');
   if (privacyElement && privacyElement.length) {
-    privacyElement.load('html/privacy.part.html', function() {
+    privacyElement.load('/html/privacy.part.html', function() {
       $('#privacy').toggle();
       $("#privacy-link").click(function() {
         $('#privacy').slideToggle(1000);
