@@ -45,24 +45,13 @@ function updateWeeklyRange() {
 
 function updateWeeklyTotals() {
   Parse.Cloud.run('weeklyTotal', {
-    totalClass: 'ApplyingUser'
+    totalClass: '_Installation'
   }).then(function(total) {
     addWeeklyTotal({
       type: 'warning',
-      icon: 'users',
+      icon: 'mobile',
       total: total,
-      label: 'Applications'
-    });
-    return Parse.Cloud.run('weeklyTotal', {
-      totalClass: 'ApplyingUser',
-      approved: true
-    });
-  }).then(function(total) {
-    addWeeklyTotal({
-      type: 'success',
-      icon: 'check-circle',
-      total: total,
-      label: 'Approved'
+      label: 'Installs'
     });
     return Parse.Cloud.run('weeklyTotal', {
       totalClass: '_User'
@@ -73,6 +62,27 @@ function updateWeeklyTotals() {
       icon: 'user',
       total: total,
       label: 'Profiles'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Answer',
+      hasText: true
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'warning',
+      icon: 'question',
+      total: total,
+      label: 'Questions Answered'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'Photo'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'info',
+      icon: 'photo',
+      total: total,
+      label: 'Photos'
     });
     return Parse.Cloud.run('weeklyTotal', {
       totalClass: 'Match',
@@ -115,6 +125,16 @@ function updateWeeklyTotals() {
       icon: 'calendar-check-o',
       total: total,
       label: 'Confirmed Dates'
+    });
+    return Parse.Cloud.run('weeklyTotal', {
+      totalClass: 'SexyPointAction'
+    });
+  }).then(function(total) {
+    addWeeklyTotal({
+      type: 'success',
+      icon: 'trophy',
+      total: total,
+      label: 'Sexy Points'
     });
   }, function(error) {
     console.error(error);
