@@ -10,8 +10,10 @@ window.getAuthType = function() {
   return 'facebook';
 }
 
-Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI',
-  'ZZUy30WPfWVii6L7RMOsD4hBxeD1dkwFT4VeYICF');
+// Parse.initialize('kcGGwHOjKTWdTUJRjaPm0PF43FWkwJ4bBBsO2ffr');
+// Parse.serverURL = 'https://sandbox.neqtr.com/1';
+Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI');
+Parse.serverURL = 'https://prod.neqtr.com/1';
 window.fbAsyncInit = function() {
   Parse.FacebookUtils.init({ // this line replaces FB.init({
     appId      : '874529702559292', // Facebook App ID
@@ -106,25 +108,14 @@ function updateWeeklyTotals() {
       label: 'Chat Messages'
     });
     return Parse.Cloud.run('weeklyTotal', {
-      totalClass: 'Invitation'
-    });
-  }).then(function(total) {
-    addWeeklyTotal({
-      type: 'warning',
-      icon: 'calendar',
-      total: total,
-      label: 'Date Invitations'
-    });
-    return Parse.Cloud.run('weeklyTotal', {
-      totalClass: 'Invitation',
-      confirmed: true
+      totalClass: 'Rsvp'
     });
   }).then(function(total) {
     addWeeklyTotal({
       type: 'success',
       icon: 'calendar-check-o',
       total: total,
-      label: 'Confirmed Dates'
+      label: 'Social RSVPs'
     });
     return Parse.Cloud.run('weeklyTotal', {
       totalClass: 'SexyPointAction'
@@ -245,9 +236,4 @@ $(function() {
   } else {
     updateForLogout();
   }
-  // updateForLogin({
-  //   get: function() {
-  //     return 'User';
-  //   }
-  // });
 });
