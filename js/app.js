@@ -10,42 +10,10 @@ _gaq.push(['_trackPageview']);
   s.parentNode.insertBefore(ga, s);
 })();
 
-Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI', 'ZZUy30WPfWVii6L7RMOsD4hBxeD1dkwFT4VeYICF');
-Parse.serverURL = 'https://api.neqtr.com/1'
+Parse.initialize('FZA2Az7SgY0jnqTnLIl5JW1W7C5OSp3HUrqog4uI');
+Parse.serverURL = 'https://prod.neqtr.com/1';
 
 $(function() {
-  var joinSection = $('#join');
-  if (joinSection && joinSection.length) {
-    joinSection.load('html/join.part.html', function() {
-      var signupForm = $('form.sign-up');
-      if (signupForm && signupForm.length) {
-        signupForm.validate();
-        signupForm.submit(function(event) {
-          event.preventDefault();
-          if ($(this).valid()) {
-            var $form = this;
-            var $formValues = {};
-            $(this).serializeArray().map(function(x) {
-              $formValues[x.name] = x.value;
-            });
-            $.post('https://neqtr.parseapp.com/join', $formValues)
-              .done(function(data) {
-                $.growl.notice({
-                  title: "Congrats!",
-                  message: data.result
-                });
-                $form.reset();
-              }).fail(function(error) {
-                $.growl.error({
-                  message: error.responseText
-                });
-              });
-          }
-        });
-      }
-    });
-  }
-
   var eventSection = $('#event');
   if (eventSection && eventSection.length) {
     eventSection.load('/html/event.part.html', function() {
@@ -116,91 +84,4 @@ $(function() {
   }
 
   $("body").track({ /* Optional Configuration */ });
-
-  var storeSection = $('#store');
-  if (storeSection && storeSection.length) {
-    storeSection.scrollwatch({
-      delay: 0,
-      range: 1.0,
-      anchor: 'center',
-      init: function(t) {
-        $('form.buy-shirt').each(function(i) {
-          $(this).css({
-            opacity: 0
-          });
-        });
-      },
-      on: function(t) {
-        $('form.buy-shirt').each(function(i) {
-          $(this).delay(i * 500).animate({
-            opacity: 1
-          }, 1000);
-        });
-      },
-      off: function(t) {
-        $('form.buy-shirt').each(function(i) {
-          $(this).css({
-            opacity: 0
-          });
-        });
-      }
-    });
-  }
-
-  var productSizeSelectors = $('select.productSize');
-  if (productSizeSelectors && productSizeSelectors.length) {
-    productSizeSelectors.selectOrDie({
-      placeholderOption: true,
-      onChange: function() {
-        $(this).data('selectedValue', $(this).val());
-      }
-    });
-  }
-
-  if (window.StripeCheckout) {
-    var currentDescription = 'Unknown Item';
-    var checkout = StripeCheckout.configure({
-      key: 'pk_live_ukHMIqvSOCYc18IMkcSrDbik',
-      image: 'https://www.neqtr.com/images/logo-padded.png',
-      token: function(token) {
-        $.post('https://neqtr-store.parseapp.com/orders', {
-            tokenId: token.id,
-            description: currentDescription,
-            email: token.email
-          }).done(function(data) {
-            console.log(data);
-            $.growl.notice({
-              title: data.result,
-              message: data.detail
-            });
-          })
-          .fail(function(data) {
-            $.growl.error({
-              message: data.responseText
-            });
-          })
-      }
-    });
-    var buyShirtForm = $('form.buy-shirt');
-    if (buyShirtForm && buyShirtForm.length) {
-      buyShirtForm.submit(function(event) {
-        event.preventDefault();
-        var selectedSize = $(this).find('select.productSize').data('selectedValue');
-        var description = selectedSize + ' ' + $(this).find('h5:first').text() + ' ($15.00)';
-        currentDescription = description;
-        if (selectedSize) {
-          checkout.open({
-            name: 'Neqtr',
-            description: description,
-            amount: 1500,
-            billingAddress: true
-          });
-        } else {
-          $.growl.error({
-            message: 'Please select a size!'
-          });
-        }
-      });
-    }
-  }
 });
